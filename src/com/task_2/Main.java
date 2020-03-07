@@ -1,8 +1,6 @@
 package com.task_2;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -39,6 +37,10 @@ public class Main {
             try (PrintWriter writer = new PrintWriter(filePath)) {
                 writer.println(numbers);
             }
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            System.out.println(reader.readLine());
         }
     }
 }
