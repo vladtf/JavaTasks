@@ -16,16 +16,19 @@ public class Main {
 
         fileNames = Arrays.asList("A", "M", "N", "T", "L");
 
-        Scanner reader = new Scanner(System.in);
-        List<String> tokens = new ArrayList<>();
+        List<String> tokens;
 
-        while (true) {
-            System.out.print("Introduceti numele (n for exit): ");
-            String name = reader.nextLine();
+        try (Scanner reader = new Scanner(System.in)) {
+            tokens = new ArrayList<>();
 
-            if (name.equals("n"))
-                break;
-            tokens.add(name);
+            while (true) {
+                System.out.print("Introduceti numele (n for exit): ");
+                String name = reader.nextLine();
+
+                if (name.equals("n"))
+                    break;
+                tokens.add(name);
+            }
         }
 
         fileNames.forEach(firstLetter -> {
@@ -38,8 +41,9 @@ public class Main {
 
     private static void writeToFile(String firstLetter, List<String> names) {
         String fileName = "numeCu" + firstLetter;
+        String filePath = "src/com/task_1/data/"+fileName;
 
-        try (PrintWriter writer = new PrintWriter(new File(fileName))) {
+        try (PrintWriter writer = new PrintWriter(new File(filePath))) {
             names.forEach(writer::println);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
