@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static java.lang.Integer.*;
 import static java.util.Comparator.*;
@@ -35,7 +36,7 @@ public class Main {
             numbers.sort(naturalOrder());
 
             try (PrintWriter writer = new PrintWriter(filePath)) {
-                writer.println(numbers);
+                writer.println(numbers.stream().map(Object::toString).collect(Collectors.joining(" , ")) +" .");
             }
         }
 
