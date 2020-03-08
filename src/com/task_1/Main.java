@@ -27,7 +27,10 @@ public class Main {
 
                 if (name.equals("n"))
                     break;
-                tokens.add(name);
+
+                // check if list don't already contains the name
+                if (!tokens.stream().map(String::toUpperCase).collect(Collectors.toList()).contains(name.toUpperCase()))
+                    tokens.add(name);
             }
         }
 
@@ -41,7 +44,7 @@ public class Main {
 
     private static void writeToFile(String firstLetter, List<String> names) {
         String fileName = "numeCu" + firstLetter;
-        String filePath = "src/com/task_1/data/"+fileName;
+        String filePath = "src/com/task_1/data/" + fileName;
 
         try (PrintWriter writer = new PrintWriter(new File(filePath))) {
             names.forEach(writer::println);
