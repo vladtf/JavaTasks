@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         String fileName = "file.txt";
-        String filePath = System.getProperty("user.dir") + File.separator + fileName;
+        String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator + fileName;
         File file = createNewFileFromPath(filePath);
 
         try (Scanner scanner = new Scanner(System.in)) {

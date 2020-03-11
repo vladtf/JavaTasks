@@ -11,6 +11,7 @@ import com.Task_3.ProducerConsumer.Consumer;
 import com.Task_3.ProducerConsumer.Producer;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,7 +21,7 @@ public class Main {
         final int NUMBER_COUNT = 1_000_000;
         final int MAX_VALUE = 1_000;
 
-        String filePath = System.getProperty("user.dir") + File.separator;
+        String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator;
 
         String readFileName = "in.txt";
         String writeFileName = "out.txt";

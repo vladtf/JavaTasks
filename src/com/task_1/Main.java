@@ -53,7 +53,7 @@ public class Main {
     private static void writeToFile(String firstLetter, List<String> names) throws URISyntaxException, IOException {
         String fileName = "numeCu" + firstLetter + ".txt";
 //        String filePath = "src/com/task_1/data/" + fileName;
-        String filePath = System.getProperty("user.dir") + File.separator + fileName;
+        String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator + fileName;
 
         File file = createNewFileFromPath(filePath);
         try (PrintWriter writer = new PrintWriter(file)) {
