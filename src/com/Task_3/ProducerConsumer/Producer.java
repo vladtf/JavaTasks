@@ -1,12 +1,10 @@
 package com.Task_3.ProducerConsumer;
 
-import javax.print.attribute.standard.RequestingUserName;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Producer implements Runnable {

@@ -10,7 +10,7 @@ import com.Task_3.DataManager.FileManager;
 import com.Task_3.ProducerConsumer.Consumer;
 import com.Task_3.ProducerConsumer.Producer;
 
-import java.io.*;
+import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Main {
     public static void main(String[] args) {
         final int NUMBER_COUNT = 1_000_000;
+        final int MAX_VALUE = 1_000;
 
         String filePath = System.getProperty("user.dir") + File.separator;
 
@@ -29,7 +30,7 @@ public class Main {
 
 
         // Initiate readFile with 1 mil. numbers
-        DataProvider.initiateRandomNumbersToFile(readFile, NUMBER_COUNT);
+        DataProvider.initiateRandomNumbersToFile(readFile, NUMBER_COUNT, MAX_VALUE);
 
         // Boolean to check when reading is done
         AtomicBoolean isDone = new AtomicBoolean(false);
@@ -37,7 +38,7 @@ public class Main {
         BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(NUMBER_COUNT);
 
         Thread producer = new Thread(new Producer(queue, readFile, isDone));
-        Thread consumer = new Thread((new Consumer(queue, writeFile, isDone)));
+        Thread consumer = new Thread(new Consumer(queue, writeFile, isDone));
 
         producer.start();
         consumer.start();
