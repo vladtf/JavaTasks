@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
         final int NUMBER_COUNT = 1_000_000;
 
-        String filePath = System.getProperty("user.dir") + "\\";
+        String filePath = System.getProperty("user.dir") + File.separator;
 
         String readFileName = "in.txt";
         String writeFileName = "out.txt";

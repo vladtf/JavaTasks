@@ -51,9 +51,9 @@ public class Main {
     }
 
     private static void writeToFile(String firstLetter, List<String> names) throws URISyntaxException, IOException {
-        String fileName = "\\numeCu" + firstLetter+".txt";
+        String fileName = "numeCu" + firstLetter + ".txt";
 //        String filePath = "src/com/task_1/data/" + fileName;
-        String filePath = System.getProperty("user.dir")+fileName;
+        String filePath = System.getProperty("user.dir") + File.separator + fileName;
 
         File file = createNewFileFromPath(filePath);
         try (PrintWriter writer = new PrintWriter(file)) {
@@ -66,7 +66,7 @@ public class Main {
     private static File createNewFileFromPath(String filePath) throws IOException {
         File file;
         file = new File(filePath);
-        if(file.exists()){
+        if (file.exists()) {
             file.delete();
         }
         file.createNewFile();
