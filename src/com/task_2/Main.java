@@ -1,12 +1,12 @@
 package com.task_2;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static java.lang.Integer.*;
-import static java.util.Comparator.*;
+import static java.lang.Integer.parseInt;
 
 public class Main {
 
