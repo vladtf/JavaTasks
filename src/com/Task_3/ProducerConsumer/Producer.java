@@ -25,8 +25,13 @@ public class Producer implements Runnable {
     public void run() {
         try (Scanner reader = new Scanner(new FileReader(readFile))) {
             while (reader.hasNext()) {
-                int x = reader.nextInt();
-                queue.add(x < 100 ? x + 1 : x - 1);
+                int value = reader.nextInt();
+
+                if (value == 100) {
+                    queue.add(value);
+                } else {
+                    queue.add(value < 100 ? value + 1 : value - 1);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
