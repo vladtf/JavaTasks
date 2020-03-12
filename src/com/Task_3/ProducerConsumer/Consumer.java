@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class Consumer implements Runnable {
 
@@ -23,13 +24,12 @@ public class Consumer implements Runnable {
     public void run() {
         try (PrintWriter writer = new PrintWriter(readFile)) {
             while (!isDone.get()) {
-                try {
-                    writer.println(queue.poll(10, TimeUnit.MILLISECONDS));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                Integer value = queue.poll(10, MILLISECONDS);
+                if (value != null) {
+                    writer.println(value);
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
 

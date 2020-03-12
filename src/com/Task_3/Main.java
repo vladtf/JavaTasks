@@ -11,23 +11,42 @@ import com.Task_3.ProducerConsumer.Consumer;
 import com.Task_3.ProducerConsumer.Producer;
 
 import java.io.File;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
     public static void main(String[] args) {
-        final int NUMBER_COUNT = 1_000_000;
+        int NUMBER_COUNT = 1_000_000;
         final int MAX_VALUE = 1_000;
 
-        String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator;
+        // check if there is any parameter on running app ( like number of items to be generated ... )
+        if (args.length > 0) {
+            try {
+                NUMBER_COUNT = Integer.parseInt(args[0]);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator+"data"+File.separator;
 
         String readFileName = "in.txt";
         String writeFileName = "out.txt";
 
-        File readFile = FileManager.createNewFile(filePath, readFileName);
-        File writeFile = FileManager.createNewFile(filePath, writeFileName);
+        File readFile = null;
+        File writeFile = null;
+
+        try {
+            readFile = FileManager.createNewFile(filePath, readFileName);
+            writeFile = FileManager.createNewFile(filePath, writeFileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         // Initiate readFile with 1 mil. numbers
