@@ -1,4 +1,4 @@
-package com.Task_3.DataManager;
+package com.Task_3.dataManager;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.Task_3.ProducerConsumer;
+package com.Task_3.producerConsumer;
 
 import java.io.File;
 import java.io.FileReader;

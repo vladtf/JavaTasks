@@ -5,10 +5,10 @@ package com.Task_3;
 //        "incrementat cu 1, daca e mai mare de 100 e decrementat cu 1). Noile valori trebuie salvate intr-un alt fisier." +
 //        "As vrea sa folositi Producer and Consumer."
 
-import com.Task_3.DataManager.DataProvider;
-import com.Task_3.DataManager.FileManager;
-import com.Task_3.ProducerConsumer.Consumer;
-import com.Task_3.ProducerConsumer.Producer;
+import com.Task_3.dataManager.DataProvider;
+import com.Task_3.dataManager.FileManager;
+import com.Task_3.producerConsumer.Consumer;
+import com.Task_3.producerConsumer.Producer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,6 +18,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
+
     public static void main(String[] args) {
         int NUMBER_COUNT = 1_000_000;
         final int MAX_VALUE = 1_000;
