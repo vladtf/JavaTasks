@@ -26,12 +26,21 @@ public class Producer implements Runnable {
 
         try (Scanner reader = new Scanner(new FileReader(readFile))) {
             while (reader.hasNext()) {
-                int value = reader.nextInt();
+                String value = reader.next();
+                int number;
 
-                if (value == 100) {
-                    queue.add(value);
+                // Checking whether the values is convertible to an integer
+                try {
+                    number = Integer.parseInt(value);
+                } catch (Exception e) {
+                    System.out.println("Found not a number value : "+value);
+                    continue;
+                }
+
+                if (number == 100) {
+                    queue.add(number);
                 } else {
-                    queue.add(value < 100 ? value + 1 : value - 1);
+                    queue.add(number < 100 ? number + 1 : number - 1);
                 }
             }
         } catch (IOException e) {
