@@ -21,6 +21,9 @@ public class Producer implements Runnable {
 
     @Override
     public void run() {
+        //TODO - is very good, but please don't let the FileReader unclosed;
+        // you can put in the same try a new variable of FileReader file and both Scanner and FileReader will be closed;
+
         try (Scanner reader = new Scanner(new FileReader(readFile))) {
             while (reader.hasNext()) {
                 int value = reader.nextInt();
