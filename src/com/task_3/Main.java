@@ -1,17 +1,16 @@
-package com.Task_3;
+package com.task_3;
 
 //"Se citeste dintr-un fisier (pe fiecare rand sunt numere < 3 cifre - fisierul poate avea si un milion de row-uri). " +
 //        "Fisierul trebuie procesat astfel incat fiecare numar sufera cateva modificari (daca e mai mic de 100 este " +
 //        "incrementat cu 1, daca e mai mare de 100 e decrementat cu 1). Noile valori trebuie salvate intr-un alt fisier." +
 //        "As vrea sa folositi Producer and Consumer."
 
-import com.Task_3.dataManager.DataProvider;
-import com.Task_3.dataManager.FileManager;
-import com.Task_3.producerConsumer.Consumer;
-import com.Task_3.producerConsumer.Producer;
+import com.task_3.dataManager.DataProvider;
+import com.task_3.dataManager.FileManager;
+import com.task_3.producerConsumer.Consumer;
+import com.task_3.producerConsumer.Producer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -31,7 +30,7 @@ public class Main {
             }
         }
 
-        String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator+"data"+File.separator;
+        String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator + "data" + File.separator;
 
         String readFileName = "in.txt";
         String writeFileName = "out.txt";
@@ -42,9 +41,6 @@ public class Main {
         try {
             readFile = FileManager.createNewFile(filePath, readFileName);
             writeFile = FileManager.createNewFile(filePath, writeFileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return;
         } catch (IOException e) {
             e.printStackTrace();
         }

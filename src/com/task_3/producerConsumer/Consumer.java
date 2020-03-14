@@ -1,4 +1,4 @@
-package com.Task_3.producerConsumer;
+package com.task_3.producerConsumer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
