@@ -5,10 +5,10 @@ package com.task_3;
 //        "incrementat cu 1, daca e mai mare de 100 e decrementat cu 1). Noile valori trebuie salvate intr-un alt fisier." +
 //        "As vrea sa folositi Producer and Consumer."
 
-import com.task_3.dataManager.DataProvider;
-import com.task_3.dataManager.FileManager;
-import com.task_3.producerConsumer.Consumer;
-import com.task_3.producerConsumer.Producer;
+import com.utils.dataManager.DataProvider;
+import com.utils.dataManager.FileManager;
+import com.utils.producerConsumer.FileNumberConsumer;
+import com.utils.producerConsumer.NumberProducer;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,14 +77,14 @@ public class Main {
 
         BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(NUMBER_COUNT);
 
-        Thread producer = new Thread(new Producer(queue, readFile, isDone));
-        Thread consumer = new Thread(new Consumer(queue, writeFile, isDone));
+        Thread producer = new Thread(new NumberProducer(queue, readFile, isDone,null));
+        Thread consumer = new Thread(new FileNumberConsumer(queue, writeFile, isDone));
 
         producer.start();
         consumer.start();
 
-        System.out.println("Reading from " + readFile.getAbsolutePath());
-        System.out.println("Writing to " + writeFile.getAbsolutePath());
+        System.out.println("Reading from : " + readFile.getAbsolutePath());
+        System.out.println("Writing to : " + writeFile.getAbsolutePath());
 
         try {
             producer.join();

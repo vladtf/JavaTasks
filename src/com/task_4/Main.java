@@ -1,26 +1,70 @@
 package com.task_4;
 
-import java.util.Scanner;
+import com.utils.dataManager.FileManager;
+import com.utils.producerConsumer.DataBaseNumberConsumer;
+import com.utils.producerConsumer.NumberProducer;
 
-//Spring Love
-//        Time limit: 1280 ms
-//        Memory limit: 264 MB
-//
-//        There's an old game called He loves me... he loves me not. The person picks petals from the flower thinking about a special someone. At the end if the number of picked petals is odd the special someone is in love. You're about find out the outcome of the game. You know there's a garden with NN flowers, flower ii having P_iP
-//        ​i
-//        ​​  petals. At the end of the game all petals from all flowers will be picked. Find out is the special someone is in love or not.
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Main {
 
+    //region DataBase configuration data
+    private static final String URL = "jdbc:mysql://localhost/";
+    private static final String DATABASE_NAME = "NUMBER_DATA";
+    private static final String TABLE_NAME = "FilesStats";
+    private static final String USER_NAME = "root";
+    private static final String USER_PASSWORD = "";
+    //endregion
+
     public static void main(String[] args) {
-        Scanner reader = new Scanner(System.in);
 
-        int n = reader.nextInt();
-
-        int s = 0;
-        for (int i = 0; i < n; i++) {
-            s += reader.nextInt();
+        // Check if there is any file name given as argument at app start
+        if (args.length == 0) {
+            System.out.println("No file arguments given.");
+            return;
         }
 
-        System.out.println(s % 2);
+        try (Connection connection = DriverManager.getConnection(URL + DATABASE_NAME, USER_NAME, USER_PASSWORD)) {
+            truncateTable(connection, TABLE_NAME);
+
+            // CountDown for tracking when all supposed thread ( args*2 : 2 threads for each file )
+            CountDownLatch latch = new CountDownLatch(args.length * 2);
+
+            for (int i = 0; i < args.length; i++) {
+
+                String filePath = "";
+                String fileName = args[i];
+                File file = FileManager.createNewFile(filePath, fileName);
+
+                BlockingQueue<Integer> queue = new LinkedBlockingQueue<>();
+                AtomicBoolean isDone = new AtomicBoolean(false);
+
+                Thread producer = new Thread(new NumberProducer(queue, file, isDone, latch));
+                Thread consumer = new Thread(new DataBaseNumberConsumer(queue, isDone, connection, fileName, latch));
+
+                producer.start();
+                consumer.start();
+            }
+
+            // Wait until all threads are done ( until the count == zero )
+            latch.await();
+            System.out.println("Finished all tasks!");
+
+        } catch (SQLException | IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void truncateTable(Connection connection, String tableName) throws SQLException {
+        connection.createStatement().execute("truncate table " + tableName);
     }
 }

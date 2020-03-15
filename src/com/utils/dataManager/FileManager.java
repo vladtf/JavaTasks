@@ -1,4 +1,4 @@
-package com.task_3.dataManager;
+package com.utils.dataManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ public class FileManager {
         File file = new File(filePath + fileName);
         File fileFolders = new File(filePath);
 
-        if(!filePath.isEmpty()){
+        if (!filePath.isEmpty()) {
             if (!fileFolders.exists()) {
                 if (!fileFolders.mkdirs()) {
                     throw new IOException("Failed to create path for : " + filePath);
