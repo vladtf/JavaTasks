@@ -16,6 +16,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.utils.dataManager.FileManager.FileManagerVariants.NEW_FILE_IF_NOT_EXISTS;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -49,8 +51,8 @@ public class Main {
         // Solved : return; ( finish the app when an error occurs )
 
         try {
-            readFile = FileManager.createNewFile(filePath, readFileName);
-            writeFile = FileManager.createNewFile(filePath, writeFileName);
+            readFile = FileManager.createNewFile(filePath, readFileName, NEW_FILE_IF_NOT_EXISTS);
+            writeFile = FileManager.createNewFile(filePath, writeFileName,NEW_FILE_IF_NOT_EXISTS);
         } catch (IOException e) { //TODO - ok - you already removed the exception FileNotFound!!!
             System.out.println("An error occurred while creating initializing read / write file! Cause :");
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.task_4;
 
 import com.utils.dataManager.FileManager;
+import com.utils.dataManager.FileManager.FileManagerVariants;
 import com.utils.producerConsumer.DataBaseNumberConsumer;
 import com.utils.producerConsumer.NumberProducer;
 
@@ -42,13 +43,13 @@ public class Main {
 
                 String filePath = "";
                 String fileName = args[i];
-                File file = FileManager.createNewFile(filePath, fileName);
+                File file = FileManager.createNewFile(filePath, fileName, FileManagerVariants.FILE_ALREADY_EXISTS);
 
                 BlockingQueue<Integer> queue = new LinkedBlockingQueue<>();
                 AtomicBoolean isDone = new AtomicBoolean(false);
 
                 Thread producer = new Thread(new NumberProducer(queue, file, isDone, latch));
-                Thread consumer = new Thread(new DataBaseNumberConsumer(queue, isDone, connection, fileName, latch));
+                Thread consumer = new Thread(new DataBaseNumberConsumer(queue, isDone, connection, fileName,TABLE_NAME, latch));
 
                 producer.start();
                 consumer.start();

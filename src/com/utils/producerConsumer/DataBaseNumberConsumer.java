@@ -13,6 +13,7 @@ public class DataBaseNumberConsumer implements Runnable {
 
     private BlockingQueue<Integer> queue;
     private AtomicBoolean isDone;
+    private String tableName;
     private CountDownLatch latch;
 
     private Connection connection;
@@ -22,9 +23,11 @@ public class DataBaseNumberConsumer implements Runnable {
                                   AtomicBoolean isDone,
                                   Connection connection,
                                   String fileName,
+                                  String tableName,
                                   CountDownLatch latch) {
         this.queue = queue;
         this.isDone = isDone;
+        this.tableName = tableName;
         this.latch = latch;
         this.connection = connection;
         this.fileName = fileName;
@@ -46,7 +49,7 @@ public class DataBaseNumberConsumer implements Runnable {
         }
 
         // Sql statement for insert into FilesStats file name and sum of numbers in file
-        try (PreparedStatement statement = connection.prepareStatement("insert into FilesStats (FileName, Sum) values (?, ?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("insert into "+tableName+" (FileName, Sum) values (?, ?)")) {
 
             // Add parameters to statement
             statement.setString(1,fileName);
