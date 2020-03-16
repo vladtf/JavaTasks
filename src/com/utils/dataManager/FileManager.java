@@ -18,6 +18,7 @@ public class FileManager {
             return file;
         }
 
+        // Check if file path is not empty ( could be already written-in fileName )
         if (!filePath.isEmpty()) {
             if (!fileFolders.exists()) {
                 if (!fileFolders.mkdirs()) {
