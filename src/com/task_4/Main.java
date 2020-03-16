@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
@@ -49,7 +50,7 @@ public class Main {
                 AtomicBoolean isDone = new AtomicBoolean(false);
 
                 Thread producer = new Thread(new NumberProducer(queue, file, isDone, latch));
-                Thread consumer = new Thread(new DataBaseNumberConsumer(queue, isDone, connection, fileName,TABLE_NAME, latch));
+                Thread consumer = new Thread(new DataBaseNumberConsumer(queue, isDone, connection, fileName, TABLE_NAME, latch));
 
                 producer.start();
                 consumer.start();
@@ -59,10 +60,22 @@ public class Main {
             latch.await();
             System.out.println("Finished all tasks!");
 
+            displayDataFromTable(connection);
+
         } catch (SQLException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private static void displayDataFromTable(Connection connection) throws SQLException {
+        System.out.println("\n\n Table results : \n");
+        System.out.println("FileName | Sum");
+        try (ResultSet resultSet = connection.createStatement().executeQuery("select * from " + TABLE_NAME)) {
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("FileName") + " | " + resultSet.getString("Sum"));
+            }
+        }
     }
 
     private static void truncateTable(Connection connection, String tableName) throws SQLException {
