@@ -60,7 +60,14 @@ public class Main {
             latch.await();
             System.out.println("Finished all tasks!");
 
-            displayDataFromTable(connection);
+            try (ResultSet resultSet = getAllData(connection)) {
+                displayDataFromTableInConsole(resultSet);
+
+                resultSet.beforeFirst();
+
+                MainView mainView = new MainView(resultSet);
+                mainView.start();
+            }
 
         } catch (SQLException | IOException | InterruptedException e) {
             e.printStackTrace();
@@ -68,14 +75,18 @@ public class Main {
 
     }
 
-    private static void displayDataFromTable(Connection connection) throws SQLException {
+    private static void displayDataFromTableInConsole(ResultSet resultSet) throws SQLException {
         System.out.println("\n\n Table results : \n");
         System.out.println("FileName | Sum");
-        try (ResultSet resultSet = connection.createStatement().executeQuery("select * from " + TABLE_NAME)) {
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("FileName") + " | " + resultSet.getString("Sum"));
-            }
+        while (resultSet.next()) {
+            System.out.println(resultSet.getString("FileName") + " | " + resultSet.getString("Sum"));
         }
+    }
+
+
+    private static ResultSet getAllData(Connection connection) throws SQLException {
+        ResultSet resultSet = connection.createStatement().executeQuery("select * from " + TABLE_NAME);
+        return resultSet;
     }
 
     private static void truncateTable(Connection connection, String tableName) throws SQLException {
