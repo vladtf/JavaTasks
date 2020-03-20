@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="javaTasks3:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/javaTasks3_jar</output-path>
+    <root id="archive" name="javaTasks.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/com/task_3/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="javaTasks" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/mysql-connector-java-8.0.19.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

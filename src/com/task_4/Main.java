@@ -7,13 +7,11 @@ import com.utils.producerConsumer.NumberProducer;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
@@ -31,7 +29,7 @@ public class Main {
         // Check if there is any file name given as argument at app start
         if (args.length == 0) {
             System.out.println("No file arguments given.");
-            return;
+            System.exit(-1);
         }
 
         try (Connection connection = DriverManager.getConnection(URL + DATABASE_NAME, USER_NAME, USER_PASSWORD)) {
@@ -40,9 +38,9 @@ public class Main {
             // CountDown for tracking when all supposed thread ( args*2 : 2 threads for each file )
             CountDownLatch latch = new CountDownLatch(args.length * 2);
 
+            String filePath = "";
             for (int i = 0; i < args.length; i++) {
 
-                String filePath = "";
                 String fileName = args[i];
                 File file = FileManager.createNewFile(filePath, fileName, FileManagerVariants.FILE_ALREADY_EXISTS);
 
@@ -56,17 +54,22 @@ public class Main {
                 consumer.start();
             }
 
-            // Wait until all threads are done ( until the count == zero )
-            latch.await();
+            // Wait until all threads are done ( until the count == zero or passed 10 seconds)
+            if (latch.await(10, TimeUnit.SECONDS) == false) {
+                System.out.println("Finished " + latch.getCount() + " out of " + args.length * 2 + ".");
+                System.out.println("Process timed out. Restart the application.");
+            }
             System.out.println("Finished all tasks!");
 
-            try (ResultSet resultSet = getAllData(connection)) {
-                displayDataFromTableInConsole(resultSet);
+            try (Statement statement = connection.createStatement()) {
+                try (ResultSet resultSet = statement.executeQuery("select * from " + TABLE_NAME)) {
+                    displayDataFromTableInConsole(resultSet);
 
-                resultSet.beforeFirst();
+                    resultSet.beforeFirst();
 
-                MainView mainView = new MainView(resultSet);
-                mainView.start();
+                    MainView mainView = new MainView(resultSet);
+                    mainView.start();
+                }
             }
 
         } catch (SQLException | IOException | InterruptedException e) {
@@ -85,11 +88,14 @@ public class Main {
 
 
     private static ResultSet getAllData(Connection connection) throws SQLException {
-        ResultSet resultSet = connection.createStatement().executeQuery("select * from " + TABLE_NAME);
-        return resultSet;
+        // Not closeable inside a method
+        Statement statement = connection.createStatement();
+        return statement.executeQuery("select * from " + TABLE_NAME);
     }
 
     private static void truncateTable(Connection connection, String tableName) throws SQLException {
-        connection.createStatement().execute("truncate table " + tableName);
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("truncate table " + tableName);
+        }
     }
 }

@@ -47,7 +47,7 @@ public class DataBaseNumberConsumer implements Runnable {
         }
 
         // Sql statement for insert into FilesStats file name and sum of numbers in file
-        try (PreparedStatement statement = connection.prepareStatement("insert into "+tableName+" (FileName, Sum) values (?, ?)")) {
+        try (PreparedStatement statement = connection.prepareStatement("insert into " + tableName + " (FileName, Sum) values (?, ?)")) {
 
             // Add parameters to statement
             statement.setString(1, fileName);
@@ -57,10 +57,12 @@ public class DataBaseNumberConsumer implements Runnable {
 
             System.out.println("Finished task for file : " + fileName);
 
-            // Decrement the number of running threads by 1
-            latch.countDown();
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Decrement the number of running threads by 1
+            latch.countDown();
         }
     }
 }

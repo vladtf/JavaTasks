@@ -23,7 +23,7 @@ public class FileNumberConsumer implements Runnable {
     @Override
     public void run() {
         try (PrintWriter writer = new PrintWriter(readFile)) {
-            while (!isDone.get()) {
+            while (!isDone.get() || !queue.isEmpty()) {
                 Integer value = queue.poll(10, MILLISECONDS);
                 if (value != null) {
 

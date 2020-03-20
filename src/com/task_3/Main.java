@@ -16,8 +16,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.utils.dataManager.FileManager.FileManagerVariants.NEW_FILE_IF_NOT_EXISTS;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -43,20 +41,20 @@ public class Main {
             filePath = "";
         }
 
-        File readFile;
-        File writeFile;
+        File readFile = null;
+        File writeFile = null;
 
         //TODO - what is happening if the IOException is thrown? What value can have readFile or writeFile in case the exception occurs?
         // I recommend to put all the steps which are using readFile and writeFile, inside the try block
         // Solved : return; ( finish the app when an error occurs )
 
         try {
-            readFile = FileManager.createNewFile(filePath, readFileName, NEW_FILE_IF_NOT_EXISTS);
-            writeFile = FileManager.createNewFile(filePath, writeFileName,NEW_FILE_IF_NOT_EXISTS);
+            readFile = FileManager.createNewFile(filePath, readFileName, FileManager.FileManagerVariants.NEW_FILE_IF_NOT_EXISTS);
+            writeFile = FileManager.createNewFile(filePath, writeFileName, FileManager.FileManagerVariants.NEW_FILE_IF_NOT_EXISTS);
         } catch (IOException e) { //TODO - ok - you already removed the exception FileNotFound!!!
             System.out.println("An error occurred while creating initializing read / write file! Cause :");
             e.printStackTrace();
-            return;
+            System.exit(-1);
         }
 
         // very nice that you generated the file, we can let like that because is important now how you implemented the threads
@@ -91,10 +89,10 @@ public class Main {
         try {
             producer.join();
             consumer.join();
+
+            System.out.println("Successfully finished the task.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Successfully finished the task.");
     }
 }

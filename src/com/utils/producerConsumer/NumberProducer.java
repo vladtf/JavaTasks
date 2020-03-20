@@ -1,7 +1,6 @@
 package com.utils.producerConsumer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
@@ -25,10 +24,6 @@ public class NumberProducer implements Runnable {
 
     @Override
     public void run() {
-        //TODO - is very good, but please don't let the FileReader unclosed;
-        // you can put in the same try a new variable of FileReader file and both Scanner and FileReader will be closed;
-
-
         try (FileReader source = new FileReader(readFile)) {
             try (Scanner reader = new Scanner(source)) {
                 while (reader.hasNext()) {
@@ -51,7 +46,7 @@ public class NumberProducer implements Runnable {
         }
 
         // when task ( reading from file ) is done return true
-        isDone.set(true);
+        isDone.getAndSet(true);
 
         if(latch!=null){
             // Decrement the number of running threads by 1

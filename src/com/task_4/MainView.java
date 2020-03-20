@@ -29,7 +29,7 @@ public class MainView extends JFrame {
         try {
             ResultSetMetaData metaData = resultSet.getMetaData();
             int numberOfColumns = metaData.getColumnCount();
-            Vector columnNames = new Vector();
+            Vector<Object> columnNames = new Vector<>();
 
             // Get Columns name
             for (int i = 0; i < numberOfColumns; i++) {
@@ -37,10 +37,10 @@ public class MainView extends JFrame {
             }
 
             // Get all rows
-            Vector rows = new Vector();
+            Vector<Vector<Object>> rows = new Vector<>();
 
             while (resultSet.next()) {
-                Vector newRow = new Vector();
+                Vector<Object> newRow = new Vector<>();
 
                 for (int i = 1; i <= numberOfColumns; i++) {
                     newRow.addElement(resultSet.getObject(i));
@@ -53,7 +53,7 @@ public class MainView extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
 
-            return null;
+            return new DefaultTableModel();
         }
     }
 
@@ -73,7 +73,9 @@ public class MainView extends JFrame {
     private void addTable() {
         JTable table = new JTable(resultSetToTableModel(resultSet));
         table.setFont(new Font("Serif", Font.PLAIN, 20));
-        add(table);
+
+        JScrollPane pane = new JScrollPane(table);
+        add(pane);
     }
 
     public void start() {
