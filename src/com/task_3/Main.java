@@ -77,7 +77,7 @@ public class Main {
 
         BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(NUMBER_COUNT);
 
-        Thread producer = new Thread(new NumberProducer(queue, readFile, isDone,null));
+        Thread producer = new Thread(new NumberProducer(queue, readFile, isDone, null));
         Thread consumer = new Thread(new FileNumberConsumer(queue, writeFile, isDone));
 
         producer.start();
