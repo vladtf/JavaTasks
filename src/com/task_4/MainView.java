@@ -54,8 +54,7 @@ public class MainView extends JFrame {
 
     private void addTable() {
 //        JTable table = new JTable(resultSetToTableModel(resultSet));
-        String[] columnsNames = new String[]{"Id", "FileName", "Sum"};
-        JTable table = new JTable(TableModelManager.listToTableModel(files, columnsNames));
+        JTable table = new JTable(TableModelManager.listToTableModel(files));
         table.setFont(new Font("Serif", Font.PLAIN, 20));
 
         JScrollPane pane = new JScrollPane(table);

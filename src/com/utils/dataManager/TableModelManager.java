@@ -4,10 +4,12 @@ import com.task_4.models.FileModel;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class TableModelManager {
@@ -44,16 +46,30 @@ public class TableModelManager {
         }
     }
 
-    public static TableModel listToTableModel(List<FileModel> items, String[] columnsNames) {
-        Object[][] data = items.stream().map(file -> {
-            Object[] row = new Object[columnsNames.length];
-            row[0] = file.getFileId();
-            row[1] = file.getFileName();
-            row[2] = file.getSum();
+    public static TableModel listToTableModel(List<FileModel> items) {
+        String[] propertiesNames = items.get(0).getPropertiesNames().toArray(String[]::new);
 
-            return row;
-        }).toArray(Object[][]::new);
+        Object[][] data = new Object[items.size()][propertiesNames.length];
+        for (int i = 0; i < items.size(); i++) {
+            Map<String, Object> properties = items.get(i).getProperties();
+            for (int j = 0; j < propertiesNames.length; j++) {
+                data[i][j] = properties.get(propertiesNames[j]);
+            }
+        }
+        return new DefaultTableModel(data, propertiesNames);
+//        Object[][] data = items.stream().map(IModel::getProperties).toArray(Object[][]::new);
+//        String[] columnsNames = items.get(0).getPropertiesNames();
+//        return new DefaultTableModel(data, columnsNames);
 
-        return new DefaultTableModel(data, columnsNames);
+    }
+
+    private static <T> Object getFieldValue(T item, Field field) {
+        try {
+            field.setAccessible(true);
+            return field.get(item);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
