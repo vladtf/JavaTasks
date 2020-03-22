@@ -3,28 +3,45 @@ package com.task_4.models;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ModelBase {
-    private int id;
+    private Map<String, Object> properties;
 
-    public int getId() {
-        return id;
+    // Not realizable without reference parameter
+    protected <T> boolean SetProperty(AtomicReference<T> property, T value) {
+        if (property.get() != null && property.get().equals(value)) {
+            return false;
+        }
+
+        property.set(value);
+        return true;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    protected void onPropertyChanged(String propertyName, Object newValue) {
+        if (properties != null) {
+            properties.put(propertyName, newValue);
+        }
     }
 
     public Map<String, Object> getProperties() {
-        Map<String, Object> properties = new HashMap<>();
+        if (properties != null) {
+            return properties;
+        }
+
+        properties = new HashMap<>();
 
         Class<?> currentClass = getClass();
 
         while (true) {
-            Field[] ownedFields = currentClass.getDeclaredFields();
+            // fields excepting 'properties'
+            Field[] ownedFields = Arrays.stream(currentClass.getDeclaredFields())
+                    .filter(field -> !field.getName().equals("properties"))
+                    .toArray(Field[]::new);
 
             for (Field field : ownedFields) {
                 try {

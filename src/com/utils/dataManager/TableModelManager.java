@@ -46,6 +46,9 @@ public class TableModelManager {
         }
     }
 
+    // TODO: 21-Mar-20
+    //  Make method to be more generic using List<T>
+    //  or using an interface IModel
     public static TableModel listToTableModel(List<FileModel> items) {
         String[] propertiesNames = items.get(0).getPropertiesNames().toArray(String[]::new);
 
