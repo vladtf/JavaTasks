@@ -44,8 +44,8 @@ public class DataBaseNumberConsumer implements Runnable {
 
         FileModel fileModel = new FileModel();
 
-        fileModel.setSum(sum);
-        fileModel.setFileName(fileName);
+        fileModel.sum.setValue(sum);
+        fileModel.fileName.setValue(fileName);
 
         if (javaTasksDAO.create(fileModel)) {
             System.out.println("Finished task for file : " + fileName);

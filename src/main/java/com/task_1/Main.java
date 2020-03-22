@@ -1,7 +1,9 @@
 package com.task_1;
 
-import java.io.*;
-import java.net.URISyntaxException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,14 +45,14 @@ public class Main {
 
             try {
                 writeToFile(firstLetter, names);
-            } catch (URISyntaxException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
     }
 
-    private static void writeToFile(String firstLetter, List<String> names) throws URISyntaxException, IOException {
+    private static void writeToFile(String firstLetter, List<String> names) throws IOException {
         String fileName = "numeCu" + firstLetter + ".txt";
 //        String filePath = "src/com/task_1/data/" + fileName;
         String filePath = java.nio.file.Paths.get(".").toAbsolutePath() + File.separator + fileName;

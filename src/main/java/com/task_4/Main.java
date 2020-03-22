@@ -61,7 +61,7 @@ public class Main {
             }
 
             // Wait until all threads are done ( until the count == zero or passed 10 seconds)
-            if (latch.await(10, TimeUnit.SECONDS) == false) {
+            if (!latch.await(10, TimeUnit.SECONDS)) {
                 System.out.println("Finished " + latch.getCount() + " out of " + args.length * 2 + ".");
                 System.out.println("Process timed out. Restart the application.");
             }

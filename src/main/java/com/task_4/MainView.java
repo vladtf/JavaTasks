@@ -29,7 +29,6 @@ public class MainView extends JFrame {
     }
 
     private void initializeComponents() {
-        this.files = files;
         setSize(800, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

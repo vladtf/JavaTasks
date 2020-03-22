@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -50,7 +51,7 @@ public class TableModelManager {
     //  Make method to be more generic using List<T>
     //  or using an interface IModel
     public static TableModel listToTableModel(List<FileModel> items) {
-        String[] propertiesNames = items.get(0).getPropertiesNames().toArray(String[]::new);
+        String[] propertiesNames = new ArrayList<>(items.get(0).getPropertiesNames()).toArray(String[]::new);
 
         Object[][] data = new Object[items.size()][propertiesNames.length];
         for (int i = 0; i < items.size(); i++) {
