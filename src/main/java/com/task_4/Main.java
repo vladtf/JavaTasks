@@ -36,6 +36,10 @@ public class Main {
             System.exit(-1);
         }
 
+        String filePath = "";
+        if ((filePath = System.getProperty("path")) != null) {
+            filePath += File.separator;
+        }
 
         try (Connection connection = DriverManager.getConnection(URL + DATABASE_NAME, USER_NAME, USER_PASSWORD)) {
             truncateTable(connection, TABLE_NAME);
@@ -45,7 +49,6 @@ public class Main {
             // CountDown for tracking when all supposed thread ( args*2 : 2 threads for each file )
             CountDownLatch latch = new CountDownLatch(args.length * 2);
 
-            String filePath = "";
             for (int i = 0; i < args.length; i++) {
                 String fileName = args[i];
                 try {
