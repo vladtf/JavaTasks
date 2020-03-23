@@ -25,7 +25,6 @@ public class FileSqlDAO implements JavaTasksDAO<FileModel> {
         try (PreparedStatement insertStatement = connection.prepareStatement("insert into " + TABLE_NAME + " (FileName, Sum) values (?, ?) ;")) {
             insertStatement.setString(1, model.fileName.getValue());
             insertStatement.setInt(2, model.sum.getValue());
-
             rowsInserted = insertStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

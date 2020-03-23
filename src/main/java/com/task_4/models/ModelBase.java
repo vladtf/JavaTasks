@@ -19,6 +19,7 @@ public class ModelBase {
         return true;
     }
 
+    // TODO: 22-Mar-20 Event NOtifyOfProertyChanged
     protected void onPropertyChanged(String propertyName, Object newValue) {
         if (properties != null) {
             properties.put(propertyName, newValue);

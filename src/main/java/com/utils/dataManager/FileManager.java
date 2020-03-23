@@ -15,7 +15,10 @@ public class FileManager {
         File fileFolders = new File(filePath);
 
         if(variant == FileManagerVariants.FILE_ALREADY_EXISTS){
-            return file;
+            if (file.exists()) {
+                return file;
+            }
+            throw new IOException("File not not found : " + filePath + fileName);
         }
 
         // Check if file path is not empty ( could be already written-in fileName )

@@ -48,16 +48,21 @@ public class Main {
             String filePath = "";
             for (int i = 0; i < args.length; i++) {
                 String fileName = args[i];
-                File readFile = FileManager.createNewFile(filePath, fileName, FileManagerVariants.FILE_ALREADY_EXISTS);
+                try {
+                    File readFile = FileManager.createNewFile(filePath, fileName, FileManagerVariants.FILE_ALREADY_EXISTS);
 
-                BlockingQueue<Integer> queue = new LinkedBlockingQueue<>();
-                AtomicBoolean isDone = new AtomicBoolean(false);
+                    BlockingQueue<Integer> queue = new LinkedBlockingQueue<>();
+                    AtomicBoolean isDone = new AtomicBoolean(false);
 
-                Thread producer = new Thread(new NumberProducer(queue, readFile, isDone, latch));
-                Thread consumer = new Thread(new DataBaseNumberConsumer(queue, isDone, latch, fileSqlDAO, fileName));
+                    Thread producer = new Thread(new NumberProducer(queue, readFile, isDone, latch));
+                    Thread consumer = new Thread(new DataBaseNumberConsumer(queue, isDone, latch, fileSqlDAO, fileName));
 
-                producer.start();
-                consumer.start();
+                    producer.start();
+                    consumer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(-1);
+                }
             }
 
             // Wait until all threads are done ( until the count == zero or passed 10 seconds)
@@ -84,7 +89,7 @@ public class Main {
 //                }
 //            }
 
-        } catch (SQLException | IOException | InterruptedException e) {
+        } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
         }
 

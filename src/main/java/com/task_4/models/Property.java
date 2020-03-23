@@ -1,13 +1,13 @@
 package com.task_4.models;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.EventListener;
 
 public class Property<T> {
-    @Autowired
     private T value;
-
     private String propertyName;
+
+    private EventListener onPropertyChanged;
 
     public Property(T value, String propertyName) {
         this.value = value;
@@ -29,5 +29,14 @@ public class Property<T> {
 
     public String getPropertyName() {
         return propertyName;
+    }
+
+    public void addPropertyChangedListener() {
+    }
+
+    private void notifyOfPropertyChanged() {
+        if (onPropertyChanged != null) {
+//            onPropertyChanged.invoke();
+        }
     }
 }

@@ -7,6 +7,7 @@ public class FileModel extends ModelBase {
     public Property<String> fileName;
     public Property<Integer> sum;
 
+    // TODO: 22-Mar-20 self-instantiable constructor
     public FileModel() {
         fileId = new Property<>(0, "FileId");
         fileName = new Property<>("", "FileName");
