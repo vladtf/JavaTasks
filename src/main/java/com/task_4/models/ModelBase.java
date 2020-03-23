@@ -26,6 +26,12 @@ public class ModelBase {
         }
     }
 
+
+    /**
+     * Get properties withing a model class
+     *
+     * @return The map of all properties
+     */
     public Map<String, Object> getProperties() {
         if (properties != null) {
             return properties;

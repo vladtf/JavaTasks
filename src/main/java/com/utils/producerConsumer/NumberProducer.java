@@ -15,6 +15,12 @@ public class NumberProducer implements Runnable {
     private AtomicBoolean isDone;
     private CountDownLatch latch;
 
+    /**
+     * @param queue    The queue where numbers will be saved
+     * @param readFile File to read from
+     * @param isDone   A boolean to check if reading is done
+     * @param latch    Counter of threads opened ( countdown when reading has finished )
+     */
     public NumberProducer(BlockingQueue<Integer> queue, File readFile, AtomicBoolean isDone, CountDownLatch latch) {
         this.queue = queue;
         this.readFile = readFile;
