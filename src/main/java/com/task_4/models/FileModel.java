@@ -13,6 +13,13 @@ public class FileModel extends ModelBase {
         fileName = new Property<>("", "FileName");
         sum = new Property<>(0, "Sum");
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Item was deleted : " + this.toString());
+        super.finalize();
+    }
+
     //    public int getFileId() {
 //        return fileId;
 //    }

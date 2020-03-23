@@ -67,7 +67,7 @@ public class Main {
                     e.printStackTrace();
                     System.exit(-1);
                 }
-            }
+             }
 
             // Wait until all threads are done ( until the count == zero or passed 10 seconds)
             if (!latch.await(10, TimeUnit.SECONDS)) {
@@ -82,6 +82,8 @@ public class Main {
 
             MainView mainView = new MainView(files);
             mainView.start();
+
+            System.gc();
 //            try (Statement statement = connection.createStatement()) {
 //                try (ResultSet resultSet = statement.executeQuery("select * from " + TABLE_NAME)) {
 //                    displayDataFromTableInConsole(resultSet);

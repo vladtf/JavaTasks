@@ -12,7 +12,7 @@ import java.util.Scanner;
 //
 //        After that, you just keep repeating the sequence above.
 //
-//        What's the NthNth dance move that you need to do, if you're dancing SalsaJS indefinetly?
+//        What's the NthNth dance move that you need to do, if you're dancing SalsaJS indefinitely?
 public class task_2 {
     public static void main(String[] args) {
         int[] results = new int[]{1, 2, 3, 1, 2, 3, 1, 2, 3, 4};
