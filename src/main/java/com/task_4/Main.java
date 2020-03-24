@@ -37,9 +37,12 @@ public class Main {
             System.exit(-1);
         }
 
-        String filePath = "";
+        String filePath;
+        // Check if there is any property "path"
         if ((filePath = System.getProperty("path")) != null) {
             filePath += File.separator;
+        } else {
+            filePath = "";
         }
 
         try (Connection connection = DriverManager.getConnection(URL + DATABASE_NAME, USER_NAME, USER_PASSWORD)) {
