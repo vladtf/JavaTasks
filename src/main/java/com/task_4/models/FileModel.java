@@ -1,8 +1,10 @@
 package com.task_4.models;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.MessageFormat;
 
-public class FileModel extends ModelBase {
+public class FileModel extends ModelBase implements Comparable<FileModel> {
     public Property<Integer> fileId;
     public Property<String> fileName;
     public Property<Integer> sum;
@@ -12,6 +14,29 @@ public class FileModel extends ModelBase {
         fileId = new Property<>(0, "FileId");
         fileName = new Property<>("", "FileName");
         sum = new Property<>(0, "Sum");
+
+        fileId.addPropertyChangedListener(eventArgs -> System.out.println("Property was changed : " + fileId.getPropertyName()));
+        fileName.addPropertyChangedListener(eventArgs -> System.out.println("Property was changed : " + fileName.getPropertyName()));
+        sum.addPropertyChangedListener(eventArgs -> System.out.println("Property was changed : " + sum.getPropertyName()));
+
+        fileId.addPropertyChangedListener(eventArgs -> notifyOfPropertyChanged(fileId.getPropertyName(), eventArgs));
+        fileName.addPropertyChangedListener(eventArgs -> notifyOfPropertyChanged(fileName.getPropertyName(), eventArgs));
+        sum.addPropertyChangedListener(eventArgs -> notifyOfPropertyChanged(sum.getPropertyName(), eventArgs));
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat.format("File : id : {0} - {1}  , sum : {2}",
+                fileId.getValue(), fileName.getValue(), sum.getValue());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof FileModel) {
+            FileModel otherModel = ((FileModel) obj);
+            return otherModel.fileId.getValue().equals(this.fileId.getValue());
+        }
+        return false;
     }
 
     @Override
@@ -20,52 +45,14 @@ public class FileModel extends ModelBase {
         super.finalize();
     }
 
-    //    public int getFileId() {
-//        return fileId;
-//    }
-//
-//    public void setFileId(Integer fileId) {
-//        if (!fileId.equals(this.fileId)) {
-//            this.fileId = fileId;
-//            onPropertyChanged("FileId", fileId);
-//        }
-//    }
-//
-//    public String getFileName() {
-//        return fileName;
-//    }
-//
-//    public void setFileName(String fileName) {
-//        if (!fileName.equals(this.fileName)) {
-//            this.fileName = fileName;
-//            onPropertyChanged("FileName", fileName);
-//        }
-//    }
-//
-//    public int getSum() {
-//        return sum;
-//    }
-//
-//    public void setSum(Integer sum) {
-//        if (!sum.equals(this.sum)) {
-//            this.sum = sum;
-//            onPropertyChanged("Sum", sum);
-//        }
-//    }
-
     @Override
-    public String toString() {
-        return MessageFormat.format("File : {0} - {1}  , sum : {2}",
-                fileId.getValue(), fileName.getValue(), sum.getValue());
+    public int compareTo(@NotNull FileModel otherFileModel) {
+        return this.sum.getValue().compareTo(otherFileModel.sum.getValue());
     }
 
-    // Used reflection instead
-//    @Override
-//    public String[] getPropertiesNames() {
-//        return new String[]{"Id", "FileName", "Sum"};
-//    }
-//
-//    public Object[] getProperties() {
-//        return new Object[]{fileId, fileName, sum};
-//    }
+    @Override
+    public int hashCode() {
+        return fileId.getValue();
+    }
+
 }

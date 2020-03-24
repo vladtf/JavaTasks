@@ -1,7 +1,10 @@
 package com.task_4.models;
 
 
-import java.util.EventListener;
+import com.task_4.events.Event;
+import com.task_4.events.EventArgs;
+
+import java.util.function.Consumer;
 
 /**
  * A class to work with fields as properties ( equivalent to c# properties )
@@ -12,7 +15,7 @@ public class Property<T> {
     private T value;
     private String propertyName;
 
-    private EventListener onPropertyChanged;
+    private Event onPropertyChanged;
 
     /**
      * @param value        Initial value
@@ -33,6 +36,8 @@ public class Property<T> {
         }
 
         this.value = value;
+        notifyOfPropertyChanged(value);
+
         return true;
     }
 
@@ -50,12 +55,17 @@ public class Property<T> {
         return propertyName;
     }
 
-    public void addPropertyChangedListener() {
+
+    public void addPropertyChangedListener(Consumer<EventArgs> listener) {
+        if (onPropertyChanged == null) {
+            onPropertyChanged = new Event();
+        }
+        onPropertyChanged.addListener(listener);
     }
 
-    private void notifyOfPropertyChanged() {
+    private void notifyOfPropertyChanged(Object value) {
         if (onPropertyChanged != null) {
-//            onPropertyChanged.invoke();
+            onPropertyChanged.broadcast(new EventArgs(value));
         }
     }
 }

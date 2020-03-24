@@ -70,7 +70,7 @@ public class Main {
                     e.printStackTrace();
                     System.exit(-1);
                 }
-             }
+            }
 
             // Wait until all threads are done ( until the count == zero or passed 10 seconds)
             if (!latch.await(10, TimeUnit.SECONDS)) {
@@ -80,7 +80,9 @@ public class Main {
             System.out.println("Finished all tasks!");
 
             List<FileModel> files = fileSqlDAO.findAll();
-
+            files.sort((model, otherFileModel) -> {
+                return otherFileModel.compareTo(model);
+            });
             displayDataFromTableInConsole(files);
 
             MainView mainView = new MainView(files);

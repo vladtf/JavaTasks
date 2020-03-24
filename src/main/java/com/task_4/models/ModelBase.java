@@ -1,5 +1,7 @@
 package com.task_4.models;
 
+import com.task_4.events.EventArgs;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +21,10 @@ public class ModelBase {
         return true;
     }
 
-    // TODO: 22-Mar-20 Event NOtifyOfProertyChanged
-    protected void onPropertyChanged(String propertyName, Object newValue) {
+    // TODO: 22-Mar-20 Event NotifyOfPropertyChanged
+    protected void notifyOfPropertyChanged(String propertyName, EventArgs eventArgs) {
         if (properties != null) {
-            properties.put(propertyName, newValue);
+            properties.put(propertyName, eventArgs.getValue());
         }
     }
 
