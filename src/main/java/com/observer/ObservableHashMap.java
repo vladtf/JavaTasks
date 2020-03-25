@@ -1,7 +1,7 @@
-package com.models.observer;
+package com.observer;
 
-import com.models.listener.PropertyChangedEvent;
-import com.models.property.Property;
+import com.property.Property;
+import com.property.PropertyChangedEvent;
 
 import java.util.HashMap;
 import java.util.function.Consumer;

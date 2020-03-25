@@ -1,7 +1,7 @@
-package com.models.listener;
+package com.property;
 
 
-import com.models.property.Property;
+import com.observer.listener.Event;
 
 import java.util.HashSet;
 import java.util.Set;

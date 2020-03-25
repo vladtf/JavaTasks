@@ -1,7 +1,7 @@
 package com.models;
 
-import com.models.observer.ObservableHashMap;
-import com.models.property.Property;
+import com.observer.ObservableHashMap;
+import com.property.Property;
 
 import java.util.Arrays;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package com.models.observer;
+package com.observer;
 
-import com.models.property.Property;
+import com.property.Property;
 
 import java.util.function.Consumer;
 

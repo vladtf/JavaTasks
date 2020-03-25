@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/javaTasks3_jar</output-path>
     <root id="archive" name="javaTasks.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/com/task_3/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/com/tasks/task_3/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="javaTasks" />
       <element id="extracted-dir" path="$PROJECT_DIR$/mysql-connector-java-8.0.19.jar" path-in-jar="/" />

@@ -1,4 +1,4 @@
-package com.task_3;
+package com.tasks.task_3;
 
 //"Se citeste dintr-un fisier (pe fiecare rand sunt numere < 3 cifre - fisierul poate avea si un milion de row-uri). " +
 //        "Fisierul trebuie procesat astfel incat fiecare numar sufera cateva modificari (daca e mai mic de 100 este " +

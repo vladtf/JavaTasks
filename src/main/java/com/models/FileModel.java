@@ -1,6 +1,6 @@
 package com.models;
 
-import com.models.property.Property;
+import com.property.Property;
 
 import java.text.MessageFormat;
 public class FileModel extends ModelBase implements Comparable<FileModel> {

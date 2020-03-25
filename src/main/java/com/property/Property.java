@@ -1,8 +1,7 @@
-package com.models.property;
+package com.property;
 
 
-import com.models.listener.PropertyChangedEvent;
-import com.models.observer.Observable;
+import com.observer.Observable;
 
 import java.text.MessageFormat;
 import java.util.function.Consumer;

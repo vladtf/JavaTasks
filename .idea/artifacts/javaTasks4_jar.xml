@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/javaTasks4_jar</output-path>
     <root id="archive" name="javaTasks.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/com/task_4/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/com/tasks/task_4/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="javaTasks" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-el/9.0.29/tomcat-embed-el-9.0.29.jar" path-in-jar="/" />

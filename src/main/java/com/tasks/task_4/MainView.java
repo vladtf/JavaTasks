@@ -1,4 +1,4 @@
-package com.task_4;
+package com.tasks.task_4;
 
 import com.models.FileModel;
 import com.utils.dataManager.TableModelManager;
