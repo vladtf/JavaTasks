@@ -2,18 +2,30 @@ package com.models.property;
 
 
 import com.models.listener.PropertyChangedEvent;
+import com.models.observer.Observable;
 
+import java.text.MessageFormat;
 import java.util.function.Consumer;
 
 /**
  * A class to work with fields as properties ( equivalent to c# properties )
  *
- * @param <T> Type of value vad is stored
+ * @param <T> Type of value that is stored
  */
-public class Property<T> {
+public class Property<T> implements Observable<T> {
+    /**
+     * Value stored
+     */
     private T value;
+
+    /**
+     * Name of property
+     */
     private String propertyName;
 
+    /**
+     * Events called if a property has changed
+     */
     private PropertyChangedEvent<T> onPropertyChanged;
 
     /**
@@ -26,6 +38,8 @@ public class Property<T> {
     }
 
     /**
+     * Set value of property and notifies if the property has changed
+     *
      * @param value New value
      * @return Return <code>true</code> if new value was set; <code>false</code> if new value == current value
      */
@@ -54,7 +68,7 @@ public class Property<T> {
         return propertyName;
     }
 
-
+    @Override
     public boolean addPropertyChangedListener(Consumer<Property<T>> listener) {
         if (onPropertyChanged == null) {
             onPropertyChanged = new PropertyChangedEvent<>();
@@ -62,9 +76,15 @@ public class Property<T> {
         return onPropertyChanged.addListener(listener);
     }
 
-    private void notifyOfPropertyChanged(Property<T> value) {
+    @Override
+    public void notifyOfPropertyChanged(Property<T> value) {
         if (onPropertyChanged != null) {
             onPropertyChanged.broadcast(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat.format("Property : {0}, with value = {1}", propertyName, value);
     }
 }

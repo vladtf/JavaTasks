@@ -1,4 +1,4 @@
-package com.models.property;
+package com.models.observer;
 
 public class ObservableMapException extends RuntimeException {
     public ObservableMapException() {

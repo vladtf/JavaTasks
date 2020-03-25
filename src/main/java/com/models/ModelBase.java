@@ -1,28 +1,18 @@
 package com.models;
 
-import com.models.property.ObservableHashMap;
+import com.models.observer.ObservableHashMap;
 import com.models.property.Property;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class ModelBase {
-    private Map<String, Object> properties;
 
-    // Not realizable without reference parameter
-    protected <T> boolean SetProperty(AtomicReference<T> property, T value) {
-        if (property.get() != null && property.get().equals(value)) {
-            return false;
-        }
-
-        property.set(value);
-        return true;
-    }
-
-
-
+    /**
+     * Map of all properties inside the model
+     */
+    private ObservableHashMap<Object> properties;
 
     /**
      * Get properties withing a model class
@@ -44,7 +34,7 @@ public abstract class ModelBase {
                         try {
                             String propertyName = field.getName();
                             if (field.get(this) instanceof Property) {
-                                Property<Object> property = ((Property) field.get(this));
+                                Property property = ((Property) field.get(this));
 
                                 properties.put(property.getPropertyName(), property.getValue());
                             }
@@ -58,6 +48,12 @@ public abstract class ModelBase {
         return properties;
     }
 
+
+    /**
+     * Call getProperties to instantiate properties map and get .keySet() - name of al properties;
+     *
+     * @return Name of all properties from a model
+     */
     public Set<String> getPropertiesNames() {
         return getProperties().keySet();
     }
