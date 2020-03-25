@@ -8,15 +8,14 @@ public class FileModel extends ModelBase implements Comparable<FileModel> {
     public Property<String> fileName;
     public Property<Integer> sum;
 
-    // TODO: 22-Mar-20 self-instantiable constructor
     public FileModel() {
-        fileId = new Property<>(0, "FileId");
-        fileName = new Property<>("", "FileName");
-        sum = new Property<>(0, "Sum");
+        this(0, "", 0);
+    }
 
-        fileId.addPropertyChangedListener(this::notifyOfPropertyChanged);
-        fileName.addPropertyChangedListener(this::notifyOfPropertyChanged);
-        sum.addPropertyChangedListener(this::notifyOfPropertyChanged);
+    public FileModel(Integer fileId, String fileName, Integer sum) {
+        this.fileId = new Property<>(fileId, "FileId");
+        this.fileName = new Property<>(fileName, "FileName");
+        this.sum = new Property<>(sum, "Sum");
     }
 
     @Override

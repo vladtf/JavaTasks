@@ -12,9 +12,8 @@ public class PropertyChangedEvent<T> implements Event<Property<T>> {
     private Set<Consumer<Property<T>>> listeners = new HashSet<>();
 
     @Override
-    public void addListener(Consumer<Property<T>> listener) {
-        listeners.add(listener);
-
+    public boolean addListener(Consumer<Property<T>> listener) {
+        return listeners.add(listener);
     }
 
     @Override

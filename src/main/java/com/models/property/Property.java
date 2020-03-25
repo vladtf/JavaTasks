@@ -55,11 +55,11 @@ public class Property<T> {
     }
 
 
-    public void addPropertyChangedListener(Consumer<Property<T>> listener) {
+    public boolean addPropertyChangedListener(Consumer<Property<T>> listener) {
         if (onPropertyChanged == null) {
             onPropertyChanged = new PropertyChangedEvent<>();
         }
-        onPropertyChanged.addListener(listener);
+        return onPropertyChanged.addListener(listener);
     }
 
     private void notifyOfPropertyChanged(Property<T> value) {

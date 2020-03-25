@@ -1,14 +1,14 @@
 package com.models;
 
+import com.models.property.ObservableHashMap;
 import com.models.property.Property;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ModelBase {
+public abstract class ModelBase {
     private Map<String, Object> properties;
 
     // Not realizable without reference parameter
@@ -21,12 +21,7 @@ public class ModelBase {
         return true;
     }
 
-    // TODO: 22-Mar-20 Event NotifyOfPropertyChanged
-    protected void notifyOfPropertyChanged(Property property) {
-        if (properties != null) {
-            properties.put(property.getPropertyName(), property.getValue());
-        }
-    }
+
 
 
     /**
@@ -39,7 +34,7 @@ public class ModelBase {
             return properties;
         }
 
-        properties = new HashMap<>();
+        properties = new ObservableHashMap<>();
 
         Class<?> currentClass = getClass();
         do {
@@ -49,8 +44,9 @@ public class ModelBase {
                         try {
                             String propertyName = field.getName();
                             if (field.get(this) instanceof Property) {
-                                Property property = ((Property) field.get(this));
-                                properties.put(propertyName, property.getValue());
+                                Property<Object> property = ((Property) field.get(this));
+
+                                properties.put(property.getPropertyName(), property.getValue());
                             }
                         } catch (IllegalAccessException | ClassCastException e) {
                             e.printStackTrace();
