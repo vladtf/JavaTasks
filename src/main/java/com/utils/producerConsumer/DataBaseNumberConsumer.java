@@ -1,6 +1,6 @@
 package com.utils.producerConsumer;
 
-import com.task_4.models.FileModel;
+import com.models.FileModel;
 import com.utils.dao.JavaTasksDAO;
 
 import java.util.concurrent.BlockingQueue;

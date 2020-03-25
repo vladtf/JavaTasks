@@ -1,9 +1,8 @@
-package com.task_4.models;
+package com.models;
 
-import org.jetbrains.annotations.NotNull;
+import com.models.property.Property;
 
 import java.text.MessageFormat;
-
 public class FileModel extends ModelBase implements Comparable<FileModel> {
     public Property<Integer> fileId;
     public Property<String> fileName;
@@ -15,13 +14,9 @@ public class FileModel extends ModelBase implements Comparable<FileModel> {
         fileName = new Property<>("", "FileName");
         sum = new Property<>(0, "Sum");
 
-        fileId.addPropertyChangedListener(eventArgs -> System.out.println("Property was changed : " + fileId.getPropertyName()));
-        fileName.addPropertyChangedListener(eventArgs -> System.out.println("Property was changed : " + fileName.getPropertyName()));
-        sum.addPropertyChangedListener(eventArgs -> System.out.println("Property was changed : " + sum.getPropertyName()));
-
-        fileId.addPropertyChangedListener(eventArgs -> notifyOfPropertyChanged(fileId.getPropertyName(), eventArgs));
-        fileName.addPropertyChangedListener(eventArgs -> notifyOfPropertyChanged(fileName.getPropertyName(), eventArgs));
-        sum.addPropertyChangedListener(eventArgs -> notifyOfPropertyChanged(sum.getPropertyName(), eventArgs));
+        fileId.addPropertyChangedListener(this::notifyOfPropertyChanged);
+        fileName.addPropertyChangedListener(this::notifyOfPropertyChanged);
+        sum.addPropertyChangedListener(this::notifyOfPropertyChanged);
     }
 
     @Override
@@ -46,7 +41,7 @@ public class FileModel extends ModelBase implements Comparable<FileModel> {
     }
 
     @Override
-    public int compareTo(@NotNull FileModel otherFileModel) {
+    public int compareTo(FileModel otherFileModel) {
         return this.sum.getValue().compareTo(otherFileModel.sum.getValue());
     }
 

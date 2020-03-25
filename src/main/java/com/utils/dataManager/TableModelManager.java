@@ -1,6 +1,6 @@
 package com.utils.dataManager;
 
-import com.task_4.models.FileModel;
+import com.models.FileModel;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;

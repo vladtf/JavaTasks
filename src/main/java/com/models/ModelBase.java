@@ -1,6 +1,6 @@
-package com.task_4.models;
+package com.models;
 
-import com.task_4.events.EventArgs;
+import com.models.property.Property;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,9 +22,9 @@ public class ModelBase {
     }
 
     // TODO: 22-Mar-20 Event NotifyOfPropertyChanged
-    protected void notifyOfPropertyChanged(String propertyName, EventArgs eventArgs) {
+    protected void notifyOfPropertyChanged(Property property) {
         if (properties != null) {
-            properties.put(propertyName, eventArgs.getValue());
+            properties.put(property.getPropertyName(), property.getValue());
         }
     }
 
@@ -48,9 +48,10 @@ public class ModelBase {
                     .forEach(field -> {
                         try {
                             String propertyName = field.getName();
-                            Property<Object> property = ((Property) field.get(this));
-
-                            properties.put(propertyName, property.getValue());
+                            if (field.get(this) instanceof Property) {
+                                Property property = ((Property) field.get(this));
+                                properties.put(propertyName, property.getValue());
+                            }
                         } catch (IllegalAccessException | ClassCastException e) {
                             e.printStackTrace();
                         }

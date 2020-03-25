@@ -1,6 +1,6 @@
 package com.task_4;
 
-import com.task_4.models.FileModel;
+import com.models.FileModel;
 import com.utils.dataManager.TableModelManager;
 
 import javax.swing.*;

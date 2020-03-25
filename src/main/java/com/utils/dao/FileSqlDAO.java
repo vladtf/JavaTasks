@@ -1,6 +1,6 @@
 package com.utils.dao;
 
-import com.task_4.models.FileModel;
+import com.models.FileModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,8 +1,7 @@
-package com.task_4.models;
+package com.models.property;
 
 
-import com.task_4.events.Event;
-import com.task_4.events.EventArgs;
+import com.models.listener.PropertyChangedEvent;
 
 import java.util.function.Consumer;
 
@@ -15,7 +14,7 @@ public class Property<T> {
     private T value;
     private String propertyName;
 
-    private Event onPropertyChanged;
+    private PropertyChangedEvent<T> onPropertyChanged;
 
     /**
      * @param value        Initial value
@@ -36,7 +35,7 @@ public class Property<T> {
         }
 
         this.value = value;
-        notifyOfPropertyChanged(value);
+        notifyOfPropertyChanged(this);
 
         return true;
     }
@@ -56,16 +55,16 @@ public class Property<T> {
     }
 
 
-    public void addPropertyChangedListener(Consumer<EventArgs> listener) {
+    public void addPropertyChangedListener(Consumer<Property<T>> listener) {
         if (onPropertyChanged == null) {
-            onPropertyChanged = new Event();
+            onPropertyChanged = new PropertyChangedEvent<>();
         }
         onPropertyChanged.addListener(listener);
     }
 
-    private void notifyOfPropertyChanged(Object value) {
+    private void notifyOfPropertyChanged(Property<T> value) {
         if (onPropertyChanged != null) {
-            onPropertyChanged.broadcast(new EventArgs(value));
+            onPropertyChanged.broadcast(this);
         }
     }
 }
