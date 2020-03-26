@@ -76,6 +76,11 @@ public class Property<T> implements Observable<T> {
     }
 
     @Override
+    public void removeAlPropertyChangedListeners() {
+        onPropertyChanged = new PropertyChangedEvent<>();
+    }
+
+    @Override
     public void notifyOfPropertyChanged(Property<T> value) {
         if (onPropertyChanged != null) {
             onPropertyChanged.broadcast(this);

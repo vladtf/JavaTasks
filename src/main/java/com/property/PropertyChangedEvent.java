@@ -23,7 +23,7 @@ public class PropertyChangedEvent<T> implements Event<Property<T>> {
             try {
                 listener.accept(args);
             } catch (Exception e) {
-                throw new EventException(e.getMessage());
+                throw new EventException("Failed to perform action : " + listener.toString());
             }
         }
     }

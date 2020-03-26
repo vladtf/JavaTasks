@@ -26,4 +26,9 @@ public interface Observable<T> {
      * @return <code>true</code> if successfully added listener; <code>false</code> if couldn't add listener
      */
     boolean addPropertyChangedListener(Consumer<Property<T>> listener);
+
+    /**
+     * Remove all the listeners.
+     */
+    void removeAlPropertyChangedListeners();
 }

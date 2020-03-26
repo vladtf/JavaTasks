@@ -20,6 +20,8 @@ public class ObservableHashMap<T> extends HashMap<String, T> implements Observab
     @Override
     public void notifyOfPropertyChanged(Property<T> property) {
         super.put(property.getPropertyName(), property.getValue());
+
+        onPropertyChanged.broadcast(property);
     }
 
     @Override
@@ -28,5 +30,10 @@ public class ObservableHashMap<T> extends HashMap<String, T> implements Observab
             onPropertyChanged = new PropertyChangedEvent<>();
         }
         return onPropertyChanged.addListener(listener);
+    }
+
+    @Override
+    public void removeAlPropertyChangedListeners() {
+        onPropertyChanged = new PropertyChangedEvent<>();
     }
 }
