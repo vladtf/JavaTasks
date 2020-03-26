@@ -42,15 +42,15 @@ public class Property<T> implements Observable<T> {
      * @param value New value
      * @return Return <code>true</code> if new value was set; <code>false</code> if new value == current value
      */
-    public boolean setValue(T value) {
-        if (value.equals(this.value)) {
-            return false;
+    public T setValue(T value) {
+        T oldValue = this.value;
+
+        if (!value.equals(this.value)) {
+            this.value = value;
+            notifyOfPropertyChanged(this);
         }
 
-        this.value = value;
-        notifyOfPropertyChanged(this);
-
-        return true;
+        return oldValue;
     }
 
     /**

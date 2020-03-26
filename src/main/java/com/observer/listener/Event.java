@@ -21,5 +21,5 @@ public interface Event<T> {
      *
      * @param args Arguments to pass on calling an event
      */
-    void broadcast(T args);
+    void broadcast(T args) throws EventException;
 }

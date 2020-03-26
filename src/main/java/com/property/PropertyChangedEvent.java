@@ -2,6 +2,7 @@ package com.property;
 
 
 import com.observer.listener.Event;
+import com.observer.listener.EventException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,8 +18,13 @@ public class PropertyChangedEvent<T> implements Event<Property<T>> {
     }
 
     @Override
-    public void broadcast(Property<T> args) {
-        listeners.forEach(x -> x.accept(args));
-
+    public void broadcast(Property<T> args) throws EventException {
+        for (Consumer<Property<T>> listener : listeners) {
+            try {
+                listener.accept(args);
+            } catch (Exception e) {
+                throw new EventException(e.getMessage());
+            }
+        }
     }
 }
