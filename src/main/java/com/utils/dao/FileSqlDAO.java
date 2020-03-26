@@ -22,8 +22,8 @@ public class FileSqlDAO implements JavaTasksDAO<FileModel> {
     public boolean create(FileModel model) {
         int rowsInserted = 0;
         try (PreparedStatement insertStatement = connection.prepareStatement("insert into " + TABLE_NAME + " (FileName, Sum) values (?, ?) ;")) {
-            insertStatement.setString(1, model.fileName.getValue());
-            insertStatement.setInt(2, model.sum.getValue());
+            insertStatement.setString(1, model.getFileName());
+            insertStatement.setInt(2, model.getSum());
             rowsInserted = insertStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,9 +41,9 @@ public class FileSqlDAO implements JavaTasksDAO<FileModel> {
                 if (resultSet.next()) {
                     foundFile = new FileModel();
 
-                    foundFile.fileId.setValue(resultSet.getInt("FileId"));
-                    foundFile.fileName.setValue(resultSet.getString("FileName"));
-                    foundFile.sum.setValue(resultSet.getInt("Sum"));
+                    foundFile.setFileId(resultSet.getInt("FileId"));
+                    foundFile.setFileName(resultSet.getString("FileName"));
+                    foundFile.setSum(resultSet.getInt("Sum"));
                 }
             }
         } catch (SQLException e) {
@@ -60,9 +60,9 @@ public class FileSqlDAO implements JavaTasksDAO<FileModel> {
                 while (resultSet.next()) {
                     FileModel file = new FileModel();
 
-                    file.fileId.setValue(resultSet.getInt("FileId"));
-                    file.fileName.setValue(resultSet.getString("FileName"));
-                    file.sum.setValue(resultSet.getInt("Sum"));
+                    file.setFileId(resultSet.getInt("FileId"));
+                    file.setFileName(resultSet.getString("FileName"));
+                    file.setSum(resultSet.getInt("Sum"));
 
                     filesFound.add(file);
                 }
@@ -78,9 +78,9 @@ public class FileSqlDAO implements JavaTasksDAO<FileModel> {
         int rowsUpdated = 0;
 
         try (PreparedStatement updateStatement = connection.prepareStatement("update " + TABLE_NAME + " set FileName = ? , Sum = ? where FileId = ? ;")) {
-            updateStatement.setString(1, model.fileName.getValue());
-            updateStatement.setInt(2, model.sum.getValue());
-            updateStatement.setInt(3, model.fileId.getValue());
+            updateStatement.setString(1, model.getFileName());
+            updateStatement.setInt(2, model.getSum());
+            updateStatement.setInt(3, model.getFileId());
 
             rowsUpdated = updateStatement.executeUpdate();
         } catch (SQLException e) {
@@ -95,7 +95,7 @@ public class FileSqlDAO implements JavaTasksDAO<FileModel> {
         int rowsDeleted = 0;
 
         try (PreparedStatement deleteStatement = connection.prepareStatement("delete  from " + TABLE_NAME + " where FileId = ?")) {
-            deleteStatement.setInt(1, model.fileId.getValue());
+            deleteStatement.setInt(1, model.getFileId());
 
             rowsDeleted = deleteStatement.executeUpdate();
         } catch (SQLException e) {

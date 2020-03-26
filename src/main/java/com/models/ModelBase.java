@@ -33,6 +33,7 @@ public abstract class ModelBase {
                     .forEach(field -> {
                         try {
                             String propertyName = field.getName();
+                            field.setAccessible(true);
                             if (field.get(this) instanceof Property) {
                                 Property property = ((Property) field.get(this));
 
